@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <link rel="shortcut icon" href="https://buff.163.com/favicon.ico" type="image/x-icon" />
+    <title>🐒Buff价格监控</title>
+    <link rel="stylesheet" href="layui/css/layui.css" media="all" />
+</head>
+
+<body class="layui-layout-body">
+    <div class="layui-header">
+        <center>
+            <h1>Buff价格监控</h1>
+        </center>
+    </div>
+    <div class="layui-body">
+        <div clss="layui-container">
+            <div class="layui-row">
+                <div class="layui-col-md9">
+                    <div class="layui-tab layui-tab-card" style="right:10%;">
+                        <ul class="layui-tab-title">
+                            <li class="layui-this">价格监控</li>
+                            <li>添加商品id</li>
+                        </ul>
+                        <div class="layui-tab-content" style="height: 450px; width: 700px">
+                            <div class="layui-tab-item layui-show">
+                                <h5> 💩如需更新刷新页面即可 💩 </h5>
+                                <table id="demo" lay-filter="test"></table>
+                            </div>
+                            <div class="layui-tab-item">
+                                <form class = "layui-form layui-form-pane" action="">
+                                    <div class="layui-form-item" pane>
+                                        <label class="layui-form-label">商品ID</label>
+                                        <div class="layui-input-block">
+                                            <input type="text" name="title" required lay-verify="required"
+                                                placeholder="请输入商品ID" autocomplete="off" class="layui-input">
+                                        </div>
+                                    </div>
+                                    <div class="layui-form-item" pane>
+                                        <div class="layui-input-block">
+                                          <button class="layui-btn" type="button" onclick="javascript:addBuffer()">立即提交</button>
+                                          <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+                                        </div>
+                                </div>
+                                </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <script src="layui/layui.js"></script>
+        <script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script type="text/javascript" >
+            function addBuffer(){
+                var data = document.getElementsByName("title")[0].value;
+                console.log(data);
+                if(data == ""){
+                    layer.msg("请输入商品ID");
+                    return false;
+                }
+                var api = "http://127.0.0.1:8000/submit/"+data;
+                var form = new FormData();
+                var settings = {
+                    "url": api,
+                    "method": "POST",
+                    "timeout": 0,
+                    "processData": false,
+                    "mimeType": "multipart/form-data",
+                    "contentType": false,
+                    "data": form
+                };
+                // 执行post
+                $.post(settings).done(function (response) {
+                    console.log(response);
+                    //json字符串转换为json对象
+                    response = JSON.parse(response);
+                    if(response["code"] == 200){
+                        layer.msg("添加成功，请刷新页面");
+                    }else if(response["code"] == 400){
+                        layer.msg("重复添加，请勿重复添加");
+                    }else{  
+                        layer.msg("添加失败，请检查商品ID是否正确");
+                    }
+                });
+            }
+        </script>
+        <script>
+            layui.use("element", function () {
+                var element = layui.element;
+            });
+        </script>
+        <script>
+            layui.use("table", function () {
+                var table = layui.table;
+
+                //第一个实例
+                table.render({
+                    elem: "#demo",
+                    height: 400,
+                    width: 1135,
+                    url: "http://127.0.0.1:8000/get", //数据接口
+                    page: true, //开启分页
+                    cols: [
+                        [
+                            //表头
+                            {
+                                field: "商品名称",
+                                title: "商品名称",
+                                width: 500,
+                            },
+                            { field: "steamCNY价格", title: "steamCNY价格", width: 200 },
+                            { field: "玩家价格前五", title: "玩家价格前五", width: 430 },
+                        ],
+                    ],
+                });
+            });
+        </script>
+</body>
+<footer>
+    <div class="layui-footer">
+        <font color="gray">© 2022网易BUFF-CSGO库存监控</font>
+    </div>
+</footer>
+
+</html>
