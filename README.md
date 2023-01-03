@@ -1,0 +1,2 @@
+# csgoMarket
+一个基于fastapi+layui可以查看关注的网易buff中的饰品价格工具
