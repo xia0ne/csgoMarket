@@ -1,6 +1,6 @@
 # :boom: csgoMarket :boom:
-![tsEmd.png](https://i.328888.xyz/2023/01/03/tsEmd.png)
-![tsGdw.png](https://i.328888.xyz/2023/01/03/tsGdw.png)
+![](https://img.erpweb.eu.org/imgs/2023/01/199e936a42cfa238.png)
+![](https://img.erpweb.eu.org/imgs/2023/01/8edd8bc23759277c.png)
 一个基于fastapi+layui可以查看关注的网易buff中的饰品价格工具
 :muscle: 本项目最终目的是想给csgo饰品倒卖玩家一个监控饰品的可视化工具，希望有能力的朋友可以为这个项目提交代码，支持本项目的良性发展。
 :star: 觉得有帮助的朋友可以给个Star
