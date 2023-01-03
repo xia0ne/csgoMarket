@@ -5,9 +5,11 @@ from typing import List,Optional
 from fastapi.responses import HTMLResponse,FileResponse
 import requests
 import logging
+from fastapi.staticfiles import StaticFiles
 
 logging.basicConfig(level=logging.INFO,filename="log.txt",filemode="a",format="%(asctime)s - %(pathname)s[line:%(lineno)d] - %(levelname)s: %(message)s")
 app = FastAPI()
+app.mount("/templates", StaticFiles(directory="./templates"), name="templates")
 
 #解决cors跨域问题
 @app.middleware("http")
