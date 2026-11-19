@@ -1,0 +1,26 @@
+# Python 运行产物
+__pycache__/
+*.py[cod]
+*.egg-info/
+/build/
+/dist/
+
+# 虚拟环境与缓存
+.venv/
+venv/
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+
+# 运行期数据：关注列表由用户本地生成，不入库
+data/watchlist.json
+data/watchlist.json.corrupt-*
+data/*.tmp
+
+# 旧版日志
+log.txt
+
+# 编辑器
+.idea/
+.vscode/
+.DS_Store
