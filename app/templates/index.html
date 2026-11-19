@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="网易 BUFF 饰品价格监控：查看关注饰品的最低在售价、Steam 参考价与价差">
+    <meta name="color-scheme" content="dark">
+    <title>csgoMarket · BUFF 饰品价格监控</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body data-max-items="{{ max_items }}">
+    <div class="page">
+        <header class="topbar">
+            <div class="brand">
+                <span class="logo" aria-hidden="true">◈</span>
+                <div>
+                    <h1>csgoMarket</h1>
+                    <p class="brand-sub">网易 BUFF 饰品价格监控</p>
+                </div>
+            </div>
+            <div class="topbar-actions">
+                <span class="stamp" id="refreshedAt">尚未加载</span>
+                <button id="refreshBtn" class="btn btn-ghost" type="button">
+                    <span class="btn-glyph" aria-hidden="true">↻</span>
+                    <span id="refreshLabel">刷新</span>
+                </button>
+            </div>
+        </header>
+
+        <section class="toolbar" aria-labelledby="addTitle">
+            <h2 id="addTitle" class="sr-only">添加关注</h2>
+            <form id="addForm" class="add-form" autocomplete="off">
+                <label class="sr-only" for="goodsInput">BUFF 商品 ID</label>
+                <input
+                    id="goodsInput"
+                    name="goods_id"
+                    type="text"
+                    inputmode="numeric"
+                    pattern="[0-9]{1,12}"
+                    maxlength="12"
+                    placeholder="输入 BUFF 商品 ID，例如 42235"
+                    aria-describedby="addHint"
+                    required
+                >
+                <button id="addBtn" class="btn btn-primary" type="submit">添加关注</button>
+            </form>
+            <p class="hint" id="addHint">商品 ID 是 BUFF 商品页链接中的数字，最多 12 位；关注列表最多 {{ max_items }} 个。</p>
+        </section>
+
+        <div id="errorBanner" class="banner banner-error" role="alert" hidden>
+            <span class="banner-mark" aria-hidden="true">!</span>
+            <p class="banner-text" id="errorText"></p>
+            <button id="retryBtn" class="btn btn-small" type="button">重试</button>
+        </div>
+
+        <div id="failedBanner" class="banner banner-warn" role="status" hidden>
+            <span class="banner-mark" aria-hidden="true">…</span>
+            <p class="banner-text" id="failedText"></p>
+        </div>
+
+        <section class="stats" id="statsBar" aria-label="加载统计" hidden>
+            <span class="chip chip-teal"><strong id="statCount">0</strong> 件关注</span>
+            <span class="chip"><strong id="statOk">0</strong> 件成功</span>
+            <span class="chip" id="statFailedChip" hidden><strong id="statFailed">0</strong> 件失败</span>
+            <span class="chip chip-muted">服务端耗时 <strong id="statTook">0</strong> ms</span>
+        </section>
+
+        <section class="panel" aria-label="价格列表">
+            <div class="table-wrap" id="tableWrap" hidden>
+                <table class="price-table">
+                    <thead>
+                        <tr>
+                            <th scope="col" class="col-icon">图标</th>
+                            <th scope="col">名称</th>
+                            <th scope="col" class="num">BUFF 最低价</th>
+                            <th scope="col" class="num">Steam 参考价</th>
+                            <th scope="col" class="num">价差</th>
+                            <th scope="col" class="num">在售</th>
+                            <th scope="col">前五卖单</th>
+                            <th scope="col">行情时间</th>
+                            <th scope="col" class="col-action">操作</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tableBody"></tbody>
+                </table>
+            </div>
+
+            <div id="loadingState" class="state loading-state" hidden>
+                <span class="spinner" aria-hidden="true"></span>
+                <p>正在向 BUFF 拉取行情…</p>
+            </div>
+
+            <div id="emptyState" class="state empty-state" hidden>
+                <span class="empty-glyph" aria-hidden="true">◇</span>
+                <h3 id="emptyTitle">还没有关注任何饰品</h3>
+                <p id="emptyText">在上方输入 BUFF 商品 ID，添加第一个监控对象。</p>
+            </div>
+        </section>
+
+        <footer class="footer">
+            <p>数据来自网易 BUFF，仅供参考。请遵守 BUFF 服务条款，不要高频请求。</p>
+            <p class="footer-muted">本地运行 · 无第三方统计 · <a href="https://github.com/xia0ne/csgoMarket" target="_blank" rel="noopener noreferrer">GitHub</a></p>
+        </footer>
+    </div>
+
+    <script src="/static/app.js" defer></script>
+</body>
+</html>
